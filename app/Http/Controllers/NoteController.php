@@ -14,6 +14,7 @@ class NoteController extends Controller
     public function index()
     {
         //
+        return view("notes.home");
     }
 
     /**

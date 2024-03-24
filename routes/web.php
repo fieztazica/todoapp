@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +25,27 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    Route::prefix('notes')->group(function () {
+        Route::get('/', [NoteController::class, 'index'])->name('notes');
+        Route::get('/{id}', [NoteController::class, 'show'])->name('notes.show');
+        Route::post('/', [NoteController::class, 'create'])->name('notes.create');
+        Route::patch('/{id}', [NoteController::class, 'edit'])->name('notes.edit');
+        Route::delete('/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');
+    });
+
+    Route::prefix('tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index'])->name('tasks');
+        Route::get('/{id}', [TaskController::class, 'show'])->name('tasks.show');
+        Route::post('/', [TaskController::class, 'create'])->name('tasks.create');
+        Route::patch('/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
