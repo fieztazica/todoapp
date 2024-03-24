@@ -12,11 +12,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->id();
             $table->string('title');
-            $table->text('content')->nullable();
+            $table->longText('content')->nullable();
             $table->foreignIdFor(User::class);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

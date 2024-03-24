@@ -33,8 +33,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('notes')->group(function () {
         Route::get('/', [NoteController::class, 'index'])->name('notes');
+        Route::get('/create', [NoteController::class, 'create'])->name('notes.create');
+        Route::post('/create', [NoteController::class, 'store'])->name('notes.store');
         Route::get('/{id}', [NoteController::class, 'show'])->name('notes.show');
-        Route::post('/', [NoteController::class, 'create'])->name('notes.create');
         Route::patch('/{id}', [NoteController::class, 'edit'])->name('notes.edit');
         Route::delete('/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');
     });
