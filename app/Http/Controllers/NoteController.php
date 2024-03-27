@@ -6,6 +6,8 @@ use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
@@ -20,7 +22,10 @@ class NoteController extends Controller
             'user_id',
             $user->id
 
-        )->get();
+        )->simplePaginate(25);
+        foreach ($notes->items() as $note) {
+            $note->summary = Str::limit($note->content, 256, '...');
+        }
         return view("notes.home", ["notes" => $notes]);
     }
 
@@ -39,6 +44,16 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request)
     {
         //
+        $note = new Note;
+        $user = $request->user();
+
+        $note->title = $request->title;
+        $note->content = $request->content;
+        $note->user_id = $user->id;
+
+        $note->save();
+
+        return Redirect::route('notes');
     }
 
     /**
