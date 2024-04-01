@@ -28,10 +28,12 @@
             <li id="note_{{$note->id}}" title="Note #{{$note->id}}">
                 <a href="/notes/{{$note->id}}">
                     <div
-                        class="text-pretty p-2 rounded bg-gray-200 dark:bg-gray-800 min-h-48 min-w-48 w-full md:w-fit md:max-w-sm shadow hover:ring-2 transition-all">
+                        class="group text-pretty p-2 rounded bg-gray-200 dark:bg-gray-800 min-h-48 min-w-48 w-full md:w-fit md:max-w-sm shadow hover:ring-2 transition-all">
                         <h3 class="text-xl font-bold truncate">{{ $note->title }}</h3>
                         <p class="text-md break-all text-neutral-800 dark:text-neutral-300 truncate text-pretty mt-2">{{
                             $note->summary }}</p>
+                        <div class="hidden group-hover:block">@include('notes.partials.delete-note', ['note' => $note])
+                        </div>
                     </div>
                 </a>
             </li>

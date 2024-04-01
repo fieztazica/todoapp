@@ -16,10 +16,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="relative font-sans antialiased">
+    @if (session('message'))
+    <div class="absolute top-0 right-0 z-50 p-8 min-w-96">
+        <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
+            class="rounded-md px-8 py-4 bg-blue-200 text-black">{{ __(session('message')) }}
+        </p>
+    </div>
+    @endif
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
-
         <!-- Page Heading -->
         @if (isset($header))
         <header class="bg-white dark:bg-gray-800 shadow">
@@ -28,7 +34,6 @@
             </div>
         </header>
         @endif
-
         <!-- Page Content -->
         <main class="container mx-auto">
             {{ $slot }}
