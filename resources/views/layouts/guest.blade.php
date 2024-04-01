@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
-                <h3 class="text-white">Login to start using <span class="font-bold">{{ config('app.name', 'Laravel') }}</span></h3>
+                <h3 class="text-black dark:text-white">Login to start using <span class="font-bold">{{ config('app.name', 'Laravel') }}</span></h3>
             </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
