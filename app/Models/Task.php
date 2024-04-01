@@ -11,7 +11,7 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'task';
+    protected $table = 'tasks';
     protected $primaryKey = 'id';
     protected $fillable = [
         "name",

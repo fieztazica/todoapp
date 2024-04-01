@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
@@ -20,7 +23,10 @@ class NoteController extends Controller
             'user_id',
             $user->id
 
-        )->get();
+        )->paginate();
+        foreach ($notes->items() as $note) {
+            $note->summary = Str::limit($note->content, 256, '...');
+        }
         return view("notes.home", ["notes" => $notes]);
     }
 
@@ -39,6 +45,16 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request)
     {
         //
+        $note = new Note;
+        $user = $request->user();
+
+        $note->title = $request->title;
+        $note->content = $request->content;
+        $note->user_id = $user->id;
+
+        $note->save();
+
+        return Redirect::route('notes');
     }
 
     /**
@@ -62,16 +78,25 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNoteRequest $request, Note $note)
+    public function update(UpdateNoteRequest $request, Note $note, $id)
     {
         //
+        $note = Note::findOrFail($id);
+        $note->title = $request->title;
+        $note->content = $request->content;
+        $note->save();
+        return Redirect::route('notes.show', ['id' => $id])->with('message', 'Note updated!')->with('status', 'note-updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Note $note)
+    public function destroy(Note $note, $id)
     {
         //
+        // dd($note);
+        $note = Note::findOrFail($id);
+        $note->deleteOrFail();
+        return Redirect::route('notes')->with('message', 'Note #' . $id . ' deleted.');
     }
 }
