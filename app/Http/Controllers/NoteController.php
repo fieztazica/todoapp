@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateNoteRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class NoteController extends Controller
 {
@@ -22,7 +23,7 @@ class NoteController extends Controller
             'user_id',
             $user->id
 
-        )->simplePaginate(25);
+        )->paginate();
         foreach ($notes->items() as $note) {
             $note->summary = Str::limit($note->content, 256, '...');
         }
@@ -77,9 +78,15 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNoteRequest $request, Note $note)
+    public function update(UpdateNoteRequest $request, Note $note, $id)
     {
         //
+        $note = Note::findOrFail($id);
+        $note->title = $request->title;
+        $note->content = $request->content;
+        $note->save();
+        // Log::channel('stderr')->info($id);
+        return Redirect::route('notes.show', ['id' => $id])->with('status', 'note-updated');
     }
 
     /**

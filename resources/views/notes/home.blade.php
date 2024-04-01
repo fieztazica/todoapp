@@ -1,20 +1,21 @@
 <x-app-layout>
     <div class="text-white px-4 py-2">
-
         <div class="flex justify-between items-center">
-            @if ($notes->count())
-            <span>{{ $notes->count() }} notes found</span>
-            @endif
-            <div class="flex space-x-2">
-                <x-nav-link :href="route('notes.create')"
-                    class="text-xl after:content-['+'] after:ml-2 after:text-white">Create a new one</x-nav-link>
-                @if ($notes->hasPages())
-                <a href="{{$notes->previousPageUrl()}}"
-                    class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Previous</a>
-                <a href="{{$notes->nextPageUrl()}}"
-                    class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Next</a>
+            <div class="flex items-center space-x-4">
+                @if ($notes->count())
+                <span>{{ $notes->count() }}/{{ $notes->total() }} notes found</span>
                 @endif
+                <div class="flex space-x-2">
+                    @if ($notes->hasPages())
+                    <a href="{{$notes->previousPageUrl()}}"
+                        class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Previous</a>
+                    <a href="{{$notes->nextPageUrl()}}"
+                        class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Next</a>
+                    @endif
+                </div>
             </div>
+            <x-nav-link :href="route('notes.create')" class="text-xl after:content-['+'] after:ml-2 after:text-white">
+                Create a new one</x-nav-link>
         </div>
         @if ($notes->count() == 0)
         <p>You don't have any note! <x-nav-link :href="route('notes.create')">Create one</x-nav-link>
@@ -34,6 +35,23 @@
             @endforeach
         </ul>
         @endif
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                @if ($notes->count())
+                <span>{{ $notes->count() }}/{{ $notes->total() }} notes found</span>
+                @endif
+                <div class="flex space-x-2">
+                    @if ($notes->hasPages())
+                    <a href="{{$notes->previousPageUrl()}}"
+                        class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Previous</a>
+                    <a href="{{$notes->nextPageUrl()}}"
+                        class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition-all">Next</a>
+                    @endif
+                </div>
+            </div>
+            <x-nav-link :href="route('notes.create')" class="text-xl after:content-['+'] after:ml-2 after:text-white">
+                Create a new one</x-nav-link>
+        </div>
     </div>
 
 </x-app-layout>
