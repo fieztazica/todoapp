@@ -28,13 +28,12 @@
 
         <div>
             <x-input-label for="content" :value="__('Content')" />
-            <x-text-area id="content" name="content" type="text" class="mt-1 block w-full min-h-screen h-fit" required>
-                {{$note->content}}
-            </x-text-area>
+            <x-text-area id="content" name="content" type="text" class="mt-1 block w-full h-fit {{ (strlen($note->content) > 256) ? 'min-h-screen' : 'min-h-96' }}" required>{{$note->content}}</x-text-area>
             <x-input-error class="mt-2" :messages="$errors->get('content')" />
         </div>
 
         <div class="flex items-center gap-4 justify-end">
+            @include('notes.partials.delete-note', ['note' => $note])
             <x-primary-button>{{ __('Save') }}</x-primary-button>
             @if (session('status') === 'note-updated')
             <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

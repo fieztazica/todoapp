@@ -17,13 +17,11 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $user = $request->user();
         $notes = Note::where(
             'user_id',
             $user->id
-
-        )->paginate();
+        )->orderByDesc('created_at')->orderByDesc('updated_at')->paginate();
         foreach ($notes->items() as $note) {
             $note->summary = Str::limit($note->content, 256, '...');
         }
@@ -64,6 +62,7 @@ class NoteController extends Controller
     {
         //
         $note = Note::findOrFail($id);
+        $note->done_tasks = $note->tasks()->where('done', true);
         return view("notes.show", ["note" => $note, "id" => $id]);
     }
 

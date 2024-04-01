@@ -18,6 +18,11 @@ class TaskFactory extends Factory
     {
         return [
             //
+            'name' => fake()->randomLetter(),
+            'description' => fake()->paragraph(),
+            'due_date' => now()->addDays(7),
+            'done' => fake()->boolean(),
+            'created_at' => now()
         ];
     }
 }
