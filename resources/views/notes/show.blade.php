@@ -10,6 +10,9 @@
         <div>
             <div>
                 <h2>Tasks</h2>
+                <x-nav-link :href="route('tasks.create')"
+                class="text-xl after:content-['+'] after:ml-2 after:text-black dark:after:text-white">
+                Create a new task</x-nav-link>
             </div>
             <ul class="grid grid-cols-4 gap-2 py-2">
                 @foreach ($note->tasks as $task)
@@ -23,8 +26,7 @@
 
                             <p
                                 class="text-md break-all text-neutral-800 dark:text-neutral-300 truncate text-pretty mt-2">
-                                {{
-                                $task->description }}</p>
+                                {{$task->description }}</p>
                         </div>
                     </a>
                 </li>
