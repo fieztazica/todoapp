@@ -15,9 +15,11 @@
                     @endif
                 </div>
             </div>
+            @if ($notes->count() > 0)
             <x-nav-link :href="route('notes.create')"
                 class="text-xl after:content-['+'] after:ml-2 after:text-black dark:after:text-white">
                 Create a new one</x-nav-link>
+            @endif
         </div>
         @if ($notes->count() == 0)
         <p>You don't have any note! <x-nav-link :href="route('notes.create')">Create one</x-nav-link>
@@ -55,9 +57,11 @@
                     @endif
                 </div>
             </div>
+            @if ($notes->count() > 0)
             <x-nav-link :href="route('notes.create')"
                 class="text-xl after:content-['+'] after:ml-2 after:text-black dark:after:text-white">
                 Create a new one</x-nav-link>
+            @endif
         </div>
     </div>
 

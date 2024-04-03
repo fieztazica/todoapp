@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('tasks')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('tasks');
         Route::get('/{id}', [TaskController::class, 'show'])->name('tasks.show');
-        Route::post('/', [TaskController::class, 'create'])->name('tasks.create');
+        Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/', [TaskController::class, 'store'])->name('tasks.store');
         Route::patch('/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
         Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     });
