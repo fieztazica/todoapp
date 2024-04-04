@@ -33,7 +33,6 @@
         </div>
 
         <div class="flex items-center gap-4 justify-end">
-            @include('notes.partials.delete-note', ['note' => $note])
             <x-primary-button>{{ __('Save') }}</x-primary-button>
             @if (session('status') === 'note-updated')
             <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

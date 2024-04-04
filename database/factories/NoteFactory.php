@@ -20,7 +20,7 @@ class NoteFactory extends Factory
             //
             'title' => fake()->name(),
             'content' => fake()->paragraph(),
-            'user_id' => 1,
+            'user_id' => 2,
             'created_at' => now(),
             'updated_at' => now()
         ];

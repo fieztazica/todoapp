@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/create', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
-        Route::patch('/{id}', [TaskController::class, 'edit'])->name('tasks.update');
+        Route::patch('/{id}', [TaskController::class, 'update'])->name('tasks.update');
         Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     });
 });

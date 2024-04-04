@@ -15,7 +15,7 @@ class TaskSeeder extends Seeder
     public function run(): void
     {
         //
-        $note = DB::table('notes')->orderByDesc('created_at')->first();
+        $note = DB::table('notes')->where('deleted_at', null)->orderByDesc('created_at')->first();
         if (!$note) {
             dd('Note not found');
             return;
