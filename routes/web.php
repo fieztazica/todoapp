@@ -42,10 +42,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('tasks')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('tasks');
-        Route::get('/{id}', [TaskController::class, 'show'])->name('tasks.show');
         Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/create', [TaskController::class, 'store'])->name('tasks.store');
-        Route::patch('/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::get('/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::patch('/{id}', [TaskController::class, 'edit'])->name('tasks.update');
         Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     });
 });

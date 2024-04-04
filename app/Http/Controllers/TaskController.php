@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
@@ -32,6 +33,8 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         //
+
+        return Redirect::route("tasks.create");
     }
 
     /**
@@ -48,6 +51,8 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         //
+        // dd($task);
+        return view('tasks.edit');
     }
 
     /**
