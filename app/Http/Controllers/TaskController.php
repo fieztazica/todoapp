@@ -96,10 +96,13 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task, $id)
+    public function destroy(Request $request, Task $task, $id)
     {
+        $in_edit = boolval($request->input('in_edit'));
         $task = Task::findOrFail($id);
         $task->deleteOrFail();
-        return Redirect::route('notes.show', ['id' => $task->note_id])->with('message', 'Task #' . $id . ' deleted.');
+        $redirect = $in_edit == true ?
+            Redirect::route('notes.show', ['id' => $task->note_id]) : Redirect::route('tasks', ['id' => $task->note_id]);
+        return $redirect->with('message', 'Task #' . $id . ' deleted.');
     }
 }

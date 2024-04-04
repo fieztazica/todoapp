@@ -4,7 +4,7 @@
             <h2><a class="hover:underline" href="{{route('notes.show', ['id'=>
                 $task->note_id])}}">Note #{{$task->note_id}}</a> / Task #{{ $task->id }}</h2>
 
-            @include('tasks.partials.delete-task', ['task_id' => $task->id])
+            @include('tasks.partials.delete-task', ['task_id' => $task->id, 'in_edit' => true])
         </div>
         {{-- <h3 class="text-xl font-bold"> {{ $note->title }}</h3>
         <textarea class="text-black">{{ $note->content }}</textarea> --}}

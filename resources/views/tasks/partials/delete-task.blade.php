@@ -1,6 +1,6 @@
-@props(['task_id'])
+@props(['task_id', 'in_edit' => false])
 
-<form method="post" action="{{ route('tasks.destroy', ['id' => $task_id]) }}">
+<form method="post" action="{{ route('tasks.destroy', ['id' => $task_id, 'in_edit' => $in_edit]) }}">
     @csrf
     @method('delete')
 
