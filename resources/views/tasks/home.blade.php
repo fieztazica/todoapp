@@ -17,8 +17,7 @@
             </div>
         </div>
         @if ($tasks->count() == 0)
-        <p>You don't have any task!
-        </p>
+        <p>You don't have any task!</p>
         @else
         <ul class="grid grid-cols-4 gap-2 py-2">
             @foreach ($tasks as $task)

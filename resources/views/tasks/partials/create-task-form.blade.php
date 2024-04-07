@@ -19,9 +19,7 @@
         @csrf
         @method('post')
 
-        <div>
-            <input id="note_id" name="note_id" type="hidden" value="{{$note_id}}" />
-        </div>
+        <input id="note_id" name="note_id" type="hidden" value="{{$note_id}}" />
 
         <div>
             <x-input-label for="name" :value="__('Task name')" />
