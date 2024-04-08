@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
-use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -15,15 +13,12 @@ class NoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        //
-        $user = $request->user();
         $notes = Note::where(
             'user_id',
-            $user->id
-
-        )->paginate();
+            auth()->user()->id
+        )->orderByDesc('created_at')->orderByDesc('updated_at')->paginate();
         foreach ($notes->items() as $note) {
             $note->summary = Str::limit($note->content, 256, '...');
         }
@@ -54,7 +49,7 @@ class NoteController extends Controller
 
         $note->save();
 
-        return Redirect::route('notes');
+        return Redirect::route('notes.show', ['note' => $note, 'id' => $note->id]);
     }
 
     /**
@@ -64,6 +59,7 @@ class NoteController extends Controller
     {
         //
         $note = Note::findOrFail($id);
+        $note->done_tasks = $note->tasks()->where('done', true);
         return view("notes.show", ["note" => $note, "id" => $id]);
     }
 
@@ -78,14 +74,14 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNoteRequest $request, Note $note, $id)
+    public function update(UpdateNoteRequest $request, $id)
     {
         //
         $note = Note::findOrFail($id);
         $note->title = $request->title;
         $note->content = $request->content;
         $note->save();
-        return Redirect::route('notes.show', ['id' => $id])->with('message', 'Note updated!')->with('status', 'note-updated');
+        return Redirect::route('notes.show', ['id' => $id])->with('message', 'Note #' . $id . ' updated!')->with('status', 'note-updated');
     }
 
     /**

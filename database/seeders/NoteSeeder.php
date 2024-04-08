@@ -18,14 +18,15 @@ class NoteSeeder extends Seeder
     public function run(): void
     {
         //
-        for ($i=0; $i < 20; $i++) {
-            # code...
-            DB::table('notes')->insert([
-                'title' => Str::random(),
-                'content' => Str::random(128),
-                'user_id' => 2
-            ]);
-        }
+        \App\Models\Note::factory(10)->create();
+        // for ($i=0; $i < 20; $i++) {
+        //     # code...
+        //     DB::table('notes')->insert([
+        //         'title' => Str::random(),
+        //         'content' => Str::random(128),
+        //         'user_id' => 2
+        //     ]);
+        // }
 
     }
 }

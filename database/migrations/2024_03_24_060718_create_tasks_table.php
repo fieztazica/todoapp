@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->foreignIdFor(Note::class);
+            $table->foreignIdFor(Note::class)->constrained();
             $table->boolean('done')->default(false);
             $table->timestamp('due_date')->nullable();
             $table->softDeletes();

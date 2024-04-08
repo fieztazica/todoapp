@@ -35,4 +35,9 @@ class Task extends Model
     {
         return $this->belongsTo(Note::class);
     }
+
+    public function tw_color()
+    {
+        return $this->done ? "bg-green-600" : "bg-slate-600";
+    }
 }

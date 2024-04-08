@@ -1,0 +1,12 @@
+@props(['task_id', 'in_edit' => false])
+
+<form method="post" action="{{ route('tasks.destroy', ['id' => $task_id, 'in_edit' => $in_edit]) }}">
+    @csrf
+    @method('delete')
+
+    <div class="flex items-center gap-4 justify-end">
+        <button type='submit' onclick="return confirm('Are you sure that you want to delete task #{{$task_id}}?')"
+            class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-500">
+            {{ __('Delete') }}</button>
+    </div>
+</form>

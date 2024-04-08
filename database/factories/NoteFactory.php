@@ -18,6 +18,11 @@ class NoteFactory extends Factory
     {
         return [
             //
+            'title' => fake()->name(),
+            'content' => fake()->paragraph(),
+            'user_id' => 2,
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }

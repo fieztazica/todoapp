@@ -18,7 +18,7 @@
 
 <body class="relative font-sans antialiased">
     @if (session('message'))
-    <div class="absolute top-0 right-0 z-50 p-8 min-w-96">
+    <div class="absolute top-4 right-4 z-50 min-w-96">
         <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
             class="rounded-md px-8 py-4 bg-blue-200 text-black">{{ __(session('message')) }}
         </p>
