@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -59,7 +60,27 @@ class NoteController extends Controller
     {
         //
         $note = Note::findOrFail($id);
-        $note->done_tasks = $note->tasks()->where('done', true);
+        // $note->done_tasks = $note->tasks()->where('done', true);
+
+        foreach ($note->tasks as $task) {
+            $task->diffDays = Carbon::parse($task->due_date)->diffInDays(now());
+            $task->diffDays *= Carbon::parse($task->due_date)->isAfter(now()) ? 1 : -1;
+
+            if ($task->diffDays <= 0) {
+                $task->due_status = -1;
+            } else if ($task->diffDays <= 1) {
+                $task->due_status = 1;
+            } else {
+                $task->due_status = 0;
+            }
+
+            if ($task->done) {
+                $task->due_status = 2;
+            }
+
+            $task->fromNow = $task->done ? 'Done' : Carbon::parse($task->due_date)->fromNow();
+        }
+
         return view("notes.show", ["note" => $note, "id" => $id]);
     }
 

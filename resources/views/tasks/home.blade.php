@@ -32,7 +32,9 @@
 
                     if ($task->due_status == 2) { $color=$green; } else if ($task->due_status == 0) { $color=$none;}
                     else
-                    if ($task->due_status > 0) { $color=$yellow;} else {$color=$red;} @endphp <div class="text-pretty p-2 rounded min-h-48 min-w-48 w-full group relative shadow
+                    if ($task->due_status > 0) { $color=$yellow;} else {$color=$red;}
+                    @endphp
+                    <div class="text-pretty p-2 rounded min-h-48 min-w-48 w-full group relative shadow
                         hover:ring-2 transition-all h-full {{ $color }}">
                         <div class="flex items-center justify-between">
                             <span
