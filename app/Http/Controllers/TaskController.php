@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
@@ -23,9 +24,24 @@ class TaskController extends Controller
         ])->whereHas('note', function ($query) {
             $query->where('user_id', auth()->user()->id);
         })->orderByDesc('created_at')->orderByDesc('updated_at')->paginate(16);
-        // foreach ($notes->items() as $note) {
-        //     $note->summary = Str::limit($note->content, 256, '...');
-        // }
+        foreach ($tasks->items() as $task) {
+            $task->diffDays = Carbon::parse($task->due_date)->diffInDays(now());
+            $task->diffDays *= Carbon::parse($task->due_date)->isAfter(now()) ? 1 : -1;
+
+            if ($task->diffDays <= 0) {
+                $task->due_status = -1;
+            } else if ($task->diffDays <= 1) {
+                $task->due_status = 1;
+            } else {
+                $task->due_status = 0;
+            }
+
+            if ($task->done) {
+                $task->due_status = 2;
+            }
+
+            $task->fromNow = $task->done ? 'Done' : Carbon::parse($task->due_date)->fromNow();
+        }
         return view("tasks.home", ["tasks" => $tasks]);
     }
 

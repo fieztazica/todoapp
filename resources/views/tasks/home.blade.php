@@ -23,13 +23,21 @@
             @foreach ($tasks as $task)
             <li id="task_{{$task->id}}" title="Task #{{$task->id}}">
                 <a href="{{route('tasks.edit', ['id' => $task->id, 'task' => $task])}}">
-                    <div class="text-pretty p-2 rounded min-h-48 min-w-48 w-full group relative shadow
-                        hover:ring-2 transition-all h-full {{$task->done ? " bg-green-300 dark:bg-green-900" : "bg-gray-200
-                        dark:bg-gray-800" }}">
+                    @php
+                    $green = "bg-green-300 dark:bg-green-900";
+                    $none = "bg-gray-200 dark:bg-gray-800";
+                    $red = "bg-red-300 dark:bg-red-900";
+                    $yellow = "bg-yellow-200 dark:bg-yellow-800";
+                    $color;
+
+                    if ($task->due_status == 2) { $color=$green; } else if ($task->due_status == 0) { $color=$none;}
+                    else
+                    if ($task->due_status > 0) { $color=$yellow;} else {$color=$red;} @endphp <div class="text-pretty p-2 rounded min-h-48 min-w-48 w-full group relative shadow
+                        hover:ring-2 transition-all h-full {{ $color }}">
                         <div class="flex items-center justify-between">
                             <span
                                 class="text-sm italic break-all text-neutral-800 dark:text-neutral-300 truncate text-pretty mt-2 flex-1">
-                                {{ $task->due_date }}</span>
+                                {{ $task->due_date }} ({{ $task->fromNow }})</span>
                             <h3 class="text-md font-bold truncate">Note #{{ $task->note_id }}</h3>
                         </div>
                         <div>
